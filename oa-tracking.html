@@ -588,7 +588,7 @@ function handleAuth() {
 function doAuth(clientId) {
   const params = new URLSearchParams({
     client_id: clientId,
-    redirect_uri: window.location.href.split('?')[0],
+    redirect_uri: window.location.href.split('?')[0].split('#')[0],
     response_type: 'token',
     scope: SCOPES,
     prompt: 'select_account'
@@ -605,11 +605,11 @@ function checkAuthCallback() {
     setAuthState(true);
     log('Signed in successfully ✓', 'success');
     document.getElementById('run-btn').disabled = false;
-  } else {
-    const saved = localStorage.getItem('oa_client_id');
-    if (saved) {
-      document.getElementById('auth-btn').textContent = 'Re-authenticate';
-    }
+    return;
+  }
+  const saved = localStorage.getItem('oa_client_id');
+  if (saved) {
+    document.getElementById('auth-btn').textContent = 'Sign in with Google';
   }
 }
 
