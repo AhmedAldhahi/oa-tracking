@@ -6,381 +6,74 @@
 <title>OA Tracking Automation</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
   :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #22263a;
-    --border: #2e3350;
-    --accent: #4f6ef7;
-    --accent-dim: #2a3a8a;
-    --green: #22c55e;
-    --green-dim: #14532d;
-    --yellow: #eab308;
-    --yellow-dim: #713f12;
-    --red: #ef4444;
-    --red-dim: #7f1d1d;
-    --text: #e8eaf6;
-    --text-muted: #6b7280;
-    --text-dim: #9ca3af;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Inter', sans-serif;
+    --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3350;
+    --accent:#4f6ef7;--accent-dim:#1e2a5e;--green:#22c55e;--green-dim:#14532d;
+    --yellow:#eab308;--red:#ef4444;--red-dim:#7f1d1d;
+    --text:#e8eaf6;--muted:#6b7280;--dim:#9ca3af;
+    --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
-    min-height: 100vh;
-    padding: 24px;
-  }
-
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-
-  .logo-text {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-
-  .logo-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: var(--mono);
-    margin-top: 1px;
-  }
-
-  #auth-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  #auth-btn:hover { opacity: 0.85; }
-  #auth-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .auth-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--text-muted);
-  }
-  .dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
-  .dot.yellow { background: var(--yellow); }
-  .dot.red { background: var(--red); }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
-
-  .stat-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .stat-value {
-    font-size: 28px;
-    font-weight: 700;
-    font-family: var(--mono);
-    color: var(--text);
-  }
-
-  .stat-value.accent { color: var(--accent); }
-  .stat-value.green { color: var(--green); }
-  .stat-value.yellow { color: var(--yellow); }
-
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-
-  .panel-header {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .panel-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .panel-body {
-    padding: 20px;
-  }
-
-  .config-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .config-row:last-child { margin-bottom: 0; }
-
-  .config-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    width: 120px;
-    flex-shrink: 0;
-  }
-
-  .config-value {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
-    background: var(--surface2);
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    flex: 1;
-  }
-
-  input.config-value {
-    outline: none;
-    color: var(--text);
-  }
-  input.config-value:focus {
-    border-color: var(--accent);
-  }
-
-  .range-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .range-row input {
-    width: 80px;
-  }
-
-  .range-sep {
-    color: var(--text-muted);
-    font-size: 12px;
-  }
-
-  .sources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 8px;
-  }
-
-  .source-tag {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    user-select: none;
-    transition: border-color 0.1s;
-  }
-
-  .source-tag.active {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  .source-tag input[type=checkbox] {
-    accent-color: var(--accent);
-  }
-
-  .run-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    letter-spacing: 0.2px;
-    margin-bottom: 16px;
-  }
-
-  .run-btn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
-  .run-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-
-  .stop-btn {
-    width: 100%;
-    padding: 10px;
-    background: transparent;
-    color: var(--red);
-    border: 1px solid var(--red);
-    border-radius: 10px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s;
-    margin-bottom: 16px;
-    display: none;
-  }
-
-  .stop-btn:hover { background: var(--red-dim); }
-
-  .log-container {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    height: 340px;
-    overflow-y: auto;
-    padding: 14px;
-    font-family: var(--mono);
-    font-size: 12px;
-    line-height: 1.7;
-  }
-
-  .log-container::-webkit-scrollbar { width: 4px; }
-  .log-container::-webkit-scrollbar-track { background: transparent; }
-  .log-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-  .log-line { display: flex; gap: 10px; }
-  .log-time { color: var(--text-muted); flex-shrink: 0; }
-  .log-msg { color: var(--text-dim); }
-  .log-msg.info { color: var(--text-dim); }
-  .log-msg.success { color: var(--green); }
-  .log-msg.warn { color: var(--yellow); }
-  .log-msg.error { color: var(--red); }
-  .log-msg.skip { color: var(--text-muted); }
-  .log-msg.write { color: var(--accent); }
-  .log-msg.bold { color: var(--text); font-weight: 500; }
-
-  .progress-bar-wrap {
-    background: var(--surface2);
-    border-radius: 6px;
-    height: 6px;
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 6px;
-    transition: width 0.3s ease;
-    width: 0%;
-  }
-
-  .results-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    font-family: var(--mono);
-  }
-
-  .results-table th {
-    text-align: left;
-    padding: 8px 12px;
-    color: var(--text-muted);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--sans);
-  }
-
-  .results-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-
-  .results-table tr:last-child td { border-bottom: none; }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    font-family: var(--sans);
-  }
-  .badge.written { background: var(--green-dim); color: var(--green); }
-  .badge.skipped { background: var(--surface2); color: var(--text-muted); }
-  .badge.failed { background: var(--red-dim); color: var(--red); }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-family: var(--sans);
-  }
-
-  .tag-pill {
-    display: inline-block;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: 4px;
-  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;padding:24px}
+  h1{font-size:16px;font-weight:700}
+  .sub{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .stat-val{font-size:26px;font-weight:700;font-family:var(--mono)}
+  .main{display:grid;grid-template-columns:1fr 280px;gap:14px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+  .ph{padding:11px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+  .pb{padding:16px}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .row:last-child{margin-bottom:0}
+  .lbl{font-size:12px;color:var(--dim);width:90px;flex-shrink:0}
+  input.inp{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);font-size:12px;font-family:var(--mono);outline:none;width:100px}
+  input.inp:focus{border-color:var(--accent)}
+  .sources{display:flex;flex-wrap:wrap;gap:7px}
+  .src{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:6px 11px;font-size:12px;cursor:pointer;user-select:none;color:var(--dim)}
+  .src.on{border-color:var(--accent);background:var(--accent-dim);color:var(--text)}
+  .run-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;transition:opacity .15s}
+  .run-btn:disabled{opacity:.35;cursor:not-allowed}
+  .stop-btn{width:100%;padding:9px;background:transparent;color:var(--red);border:1px solid var(--red);border-radius:9px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px;display:none}
+  .prog-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:12px;overflow:hidden}
+  .prog{height:100%;background:var(--accent);border-radius:4px;width:0%;transition:width .3s}
+  .log{background:var(--bg);border:1px solid var(--border);border-radius:9px;height:380px;overflow-y:auto;padding:12px;font-family:var(--mono);font-size:11px;line-height:1.75}
+  .log::-webkit-scrollbar{width:3px}
+  .log::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .ll{display:flex;gap:8px}
+  .lt{color:var(--muted);flex-shrink:0}
+  .lm{color:var(--dim)}
+  .lm.s{color:var(--green)}
+  .lm.w{color:var(--yellow)}
+  .lm.e{color:var(--red)}
+  .lm.wr{color:#818cf8}
+  .lm.b{color:var(--text);font-weight:500}
+  .auth-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+  .auth-title{font-size:13px;font-weight:600;margin-bottom:10px}
+  .auth-accounts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .acct{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px}
+  .acct-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .acct-email{font-size:12px;color:var(--dim);font-family:var(--mono);margin-bottom:8px}
+  .acct-status{display:flex;align-items:center;gap:6px;font-size:12px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+  .dot.on{background:var(--green);box-shadow:0 0 5px var(--green)}
+  .acct-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);border:1px solid var(--border);background:var(--surface);color:var(--text)}
+  .acct-btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+  .cid-row{display:flex;gap:8px;align-items:center}
+  .cid-inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:var(--mono);outline:none}
+  .cid-inp:focus{border-color:var(--accent)}
+  .results-tbl{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
+  .results-tbl th{text-align:left;padding:7px 12px;color:var(--muted);font-size:10px;border-bottom:1px solid var(--border);font-family:var(--sans);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .results-tbl td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--dim)}
+  .badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;font-family:var(--sans)}
+  .badge.written{background:var(--green-dim);color:var(--green)}
+  .badge.skipped{background:var(--surface2);color:var(--muted)}
+  .badge.failed{background:var(--red-dim);color:var(--red)}
+  .tag{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:10px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -389,208 +82,139 @@
   <div class="logo">
     <div class="logo-icon">📦</div>
     <div>
-      <div class="logo-text">OA Tracking</div>
-      <div class="logo-sub">Gmail → Sheets Automation</div>
+      <h1>OA Tracking Automation</h1>
+      <div class="sub">Gmail HTML → Google Sheets</div>
     </div>
-  </div>
-  <div style="display:flex;align-items:center;gap:16px;">
-    <div class="auth-status">
-      <div class="dot" id="auth-dot"></div>
-      <span id="auth-label">Not signed in</span>
-    </div>
-    <button id="auth-btn" onclick="handleAuth()">Sign in with Google</button>
   </div>
 </header>
 
-<div class="grid">
-  <div class="stat-card">
-    <div class="stat-label">Rows Scanned</div>
-    <div class="stat-value accent" id="stat-scanned">0</div>
+<!-- AUTH PANEL -->
+<div class="auth-panel" id="auth-panel">
+  <div class="auth-title">Google accounts</div>
+  <div style="margin-bottom:10px">
+    <div style="font-size:12px;color:var(--dim);margin-bottom:6px">Client ID</div>
+    <div class="cid-row">
+      <input class="cid-inp" id="cid-inp" placeholder="Paste your OAuth Client ID here" />
+      <button class="acct-btn primary" onclick="saveCid()">Save</button>
+    </div>
   </div>
-  <div class="stat-card">
-    <div class="stat-label">Tracking Written</div>
-    <div class="stat-value green" id="stat-written">0</div>
+  <div class="auth-accounts">
+    <div class="acct">
+      <div class="acct-label">Account 1 — Gmail + Sheets</div>
+      <div class="acct-email">voaderainc@gmail.com</div>
+      <div class="acct-status">
+        <div class="dot" id="dot1"></div>
+        <span id="lbl1" style="color:var(--muted)">Not signed in</span>
+      </div>
+      <div style="margin-top:8px"><button class="acct-btn" id="btn1" onclick="signIn(1)">Sign in</button></div>
+    </div>
+    <div class="acct">
+      <div class="acct-label">Account 2 — Gmail only</div>
+      <div class="acct-email">yousefbooksaz@gmail.com</div>
+      <div class="acct-status">
+        <div class="dot" id="dot2"></div>
+        <span id="lbl2" style="color:var(--muted)">Not signed in</span>
+      </div>
+      <div style="margin-top:8px"><button class="acct-btn" id="btn2" onclick="signIn(2)">Sign in</button></div>
+    </div>
   </div>
-  <div class="stat-card">
-    <div class="stat-label">Skipped</div>
-    <div class="stat-value yellow" id="stat-skipped">0</div>
-  </div>
+  <div style="font-size:11px;color:var(--muted)">Sign in with both accounts. Account 1 also writes to the sheet.</div>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 300px;gap:16px;">
+<div class="stats">
+  <div class="stat"><div class="stat-label">Rows scanned</div><div class="stat-val" id="st-scanned" style="color:var(--accent)">0</div></div>
+  <div class="stat"><div class="stat-label">Tracking written</div><div class="stat-val" id="st-written" style="color:var(--green)">0</div></div>
+  <div class="stat"><div class="stat-label">Skipped</div><div class="stat-val" id="st-skipped" style="color:var(--yellow)">0</div></div>
+</div>
+
+<div class="main">
   <div>
     <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Configuration</div>
-      </div>
-      <div class="panel-body">
-        <div class="config-row">
-          <div class="config-label">Spreadsheet ID</div>
-          <input class="config-value" id="sheet-id" value="1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA" />
-        </div>
-        <div class="config-row">
-          <div class="config-label">Sheet Name</div>
-          <input class="config-value" id="sheet-name" value="Oa purchases 2026" />
-        </div>
-        <div class="config-row">
-          <div class="config-label">Row Range</div>
-          <div class="range-row">
-            <input class="config-value" id="start-row" value="2" placeholder="Start" />
-            <span class="range-sep">→</span>
-            <input class="config-value" id="end-row" value="19158" placeholder="End" />
-          </div>
-        </div>
-        <div class="config-row">
-          <div class="config-label">Batch Size</div>
-          <input class="config-value" id="batch-size" value="50" placeholder="Rows per batch" style="width:80px;flex:none;" />
-        </div>
+      <div class="ph">Configuration</div>
+      <div class="pb">
+        <div class="row"><span class="lbl">Start row</span><input class="inp" id="start-row" value="2694"></div>
+        <div class="row"><span class="lbl">End row</span><input class="inp" id="end-row" value="19158"></div>
+        <div class="row"><span class="lbl">Batch size</span><input class="inp" id="batch-sz" value="50"></div>
+        <div class="row"><span class="lbl">Sheet ID</span><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA</span></div>
       </div>
     </div>
 
     <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Sources to Process</div>
-        <span style="font-size:11px;color:var(--text-muted);">Toggle which sources to run</span>
-      </div>
-      <div class="panel-body">
-        <div class="sources-grid" id="sources-grid"></div>
-      </div>
+      <div class="ph">Sources <span style="font-size:11px;color:var(--muted);font-weight:400">toggle to include/exclude</span></div>
+      <div class="pb"><div class="sources" id="sources-ui"></div></div>
     </div>
 
     <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Results</div>
-        <span id="results-count" style="font-size:11px;color:var(--text-muted);">—</span>
-      </div>
-      <div style="max-height:300px;overflow-y:auto;">
-        <table class="results-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Source</th>
-              <th>Rows</th>
-              <th>Tracking</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="results-body">
-            <tr><td colspan="5"><div class="empty-state">Run the automation to see results</div></td></tr>
-          </tbody>
+      <div class="ph">Results <span id="res-count" style="font-size:11px;color:var(--muted);font-weight:400">—</span></div>
+      <div style="max-height:280px;overflow-y:auto">
+        <table class="results-tbl">
+          <thead><tr><th>Order ID</th><th>Source</th><th>Rows</th><th>Tracking</th><th>Status</th></tr></thead>
+          <tbody id="res-body"><tr><td colspan="5" style="text-align:center;padding:28px;color:var(--muted);font-family:var(--sans)">Run the automation to see results</td></tr></tbody>
         </table>
       </div>
     </div>
   </div>
 
   <div>
-    <button class="run-btn" id="run-btn" onclick="startRun()" disabled>
-      ▶ Run Automation
-    </button>
-    <button class="stop-btn" id="stop-btn" onclick="stopRun()">
-      ■ Stop
-    </button>
-
-    <div class="progress-bar-wrap">
-      <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
+    <button class="run-btn" id="run-btn" onclick="startRun()" disabled>▶ Run Automation</button>
+    <button class="stop-btn" id="stop-btn" onclick="doStop()">■ Stop</button>
+    <div class="prog-wrap"><div class="prog" id="prog"></div></div>
     <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Live Log</div>
-        <span id="log-status" style="font-size:11px;color:var(--text-muted);">Idle</span>
-      </div>
-      <div class="log-container" id="log"></div>
+      <div class="ph">Live log <span id="log-status" style="font-size:11px;color:var(--muted);font-weight:400">Idle</span></div>
+      <div class="log" id="log"></div>
     </div>
   </div>
 </div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-const CLIENT_ID = ''; // Will be set by user
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/spreadsheets';
+const SHEET_ID = '1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA';
+const SHEET_NAME = 'Oa purchases 2026';
+const SCOPES_FULL = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/spreadsheets';
+const SCOPES_GMAIL = 'https://www.googleapis.com/auth/gmail.readonly';
 
-const SPREADSHEET_ID = () => document.getElementById('sheet-id').value.trim();
-const SHEET_NAME = () => document.getElementById('sheet-name').value.trim();
-const START_ROW = () => parseInt(document.getElementById('start-row').value) || 2;
-const END_ROW = () => parseInt(document.getElementById('end-row').value) || 19158;
-const BATCH_SIZE = () => parseInt(document.getElementById('batch-size').value) || 50;
+const SKIP = new Set(['saeedryiad.jme@gmail.com','mamoon.jmegoods@gmail.com','oa.jmegoods@gmail.com','daniaalwai.jme@gmail.com','salman.jmegoodss@gmail.com','raeisabooks@gmail.com','voaderatools@gmail.com','abdullahieisabooks@gmail.com','fariseisabooks@gmail.com','belal.voadera@gmail.com','elwani1995@gmail.com']);
 
-// ─── INACCESSIBLE INBOXES ─────────────────────────────────────────────────────
-const SKIP_INBOXES = new Set([
-  'saeedryiad.jme@gmail.com','mamoon.jmegoods@gmail.com','oa.jmegoods@gmail.com',
-  'daniaalwai.jme@gmail.com','salman.jmegoodss@gmail.com','raeisabooks@gmail.com',
-  'voaderatools@gmail.com','abdullahieisabooks@gmail.com','fariseisabooks@gmail.com',
-  'belal.voadera@gmail.com','elwani1995@gmail.com'
-]);
-
-// ─── SOURCE DEFINITIONS ───────────────────────────────────────────────────────
-const SOURCES = {
-  sierra: {
-    label: 'Sierra / TJX',
-    pattern: /^E4[34]\d{6}$/,
-    accounts: ['yousefbooksaz@gmail.com'],
-    findTracking: parseSierra
-  },
-  '888lots': {
-    label: '888lots',
-    pattern: /^267\d{7}$/,
-    accounts: ['yousefbooksaz@gmail.com','voaderainc@gmail.com'],
-    findTracking: parse888lots
-  },
-  samsclub: {
-    label: "Sam's Club",
-    pattern: /^103\d{7}$/,
-    accounts: ['yousefbooksaz@gmail.com','voaderainc@gmail.com'],
-    findTracking: parseSamsClub
-  },
-  rackroom: {
-    label: 'Rack Room',
-    pattern: /^4713\d{6}$/,
-    accounts: ['yousefbooksaz@gmail.com','voaderainc@gmail.com'],
-    findTracking: parseRackRoom
-  },
-  macys: {
-    label: "Macy's",
-    pattern: null,
-    sourceName: "macy's",
-    accounts: ['yousefbooksaz@gmail.com','voaderainc@gmail.com'],
-    findTracking: parseMacys
-  },
-  dtlr: {
-    label: 'DTLR',
-    pattern: /^50(46|58)\d{3}$/,
-    accounts: ['yousefbooksaz@gmail.com','voaderainc@gmail.com'],
-    findTracking: parseDTLR
-  }
+const SRC_DEFS = {
+  sierra:   {label:'Sierra / TJX', pat:/^E4[34]\d{6}$/},
+  lots888:  {label:'888lots',       pat:/^267\d{7}$/},
+  samsclub: {label:"Sam's Club",    pat:/^103\d{7}$/},
+  rackroom: {label:'Rack Room',     pat:/^4713\d{6}$/},
+  macys:    {label:"Macy's",        pat:null, srcName:'macy'},
+  dtlr:     {label:'DTLR',          pat:/^50(46|58)\d{3}$/},
 };
 
-const enabledSources = new Set(Object.keys(SOURCES));
+// Two tokens: token1 = voaderainc (sheets+gmail), token2 = yousefbooksaz (gmail only)
+let token1 = null, token2 = null;
+let pendingSignIn = null;
+let running = false, stopReq = false;
+let stats = {scanned:0,written:0,skipped:0};
+let enabled = new Set(Object.keys(SRC_DEFS));
+let resultsList = [];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let accessToken = null;
-let running = false;
-let stopRequested = false;
-let stats = { scanned: 0, written: 0, skipped: 0 };
-let results = [];
-
-// ─── AUTH ─────────────────────────────────────────────────────────────────────
-function handleAuth() {
-  const clientId = prompt(
-    'Enter your Google OAuth Client ID.\n\n' +
-    'Go to console.cloud.google.com → Create project → APIs & Services → Credentials → Create OAuth 2.0 Client ID (Web application)\n' +
-    'Add this page URL as an Authorized JavaScript origin.\n\n' +
-    'Client ID:'
-  );
-  if (!clientId) return;
-  localStorage.setItem('oa_client_id', clientId);
-  doAuth(clientId);
+// ─── CLIENT ID ────────────────────────────────────────────────────────────────
+function saveCid() {
+  const v = document.getElementById('cid-inp').value.trim();
+  if (!v) return;
+  localStorage.setItem('oa_cid', v);
+  addLog('Client ID saved ✓', 's');
 }
 
-function doAuth(clientId) {
+function getCid() {
+  return localStorage.getItem('oa_cid') || document.getElementById('cid-inp').value.trim();
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function signIn(acct) {
+  const cid = getCid();
+  if (!cid) { alert('Save your Client ID first'); return; }
+  pendingSignIn = acct;
+  localStorage.setItem('oa_pending', acct);
+  const scope = acct === 1 ? SCOPES_FULL : SCOPES_GMAIL;
   const params = new URLSearchParams({
-    client_id: clientId,
+    client_id: cid,
     redirect_uri: window.location.href.split('?')[0].split('#')[0],
     response_type: 'token',
-    scope: SCOPES,
+    scope: scope,
     prompt: 'select_account'
   });
   window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params;
@@ -598,464 +222,363 @@ function doAuth(clientId) {
 
 function checkAuthCallback() {
   const hash = window.location.hash;
-  if (hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.slice(1));
-    accessToken = params.get('access_token');
-    window.history.replaceState({}, '', window.location.pathname);
-    setAuthState(true);
-    log('Signed in successfully ✓', 'success');
-    document.getElementById('run-btn').disabled = false;
+  if (!hash.includes('access_token')) {
+    const saved = localStorage.getItem('oa_cid');
+    if (saved) document.getElementById('cid-inp').value = saved;
+    loadSavedTokens();
     return;
   }
-  const saved = localStorage.getItem('oa_client_id');
-  if (saved) {
-    document.getElementById('auth-btn').textContent = 'Sign in with Google';
+  const params = new URLSearchParams(hash.slice(1));
+  const tok = params.get('access_token');
+  const acct = parseInt(localStorage.getItem('oa_pending') || '1');
+  window.history.replaceState({}, '', window.location.pathname);
+  localStorage.removeItem('oa_pending');
+  if (acct === 1) {
+    token1 = tok;
+    localStorage.setItem('oa_tok1', tok);
+    setAcctState(1, true);
+    addLog('Account 1 (voaderainc) signed in ✓', 's');
+  } else {
+    token2 = tok;
+    localStorage.setItem('oa_tok2', tok);
+    setAcctState(2, true);
+    addLog('Account 2 (yousefbooksaz) signed in ✓', 's');
+  }
+  checkRunnable();
+  const saved = localStorage.getItem('oa_cid');
+  if (saved) document.getElementById('cid-inp').value = saved;
+}
+
+function loadSavedTokens() {
+  // Tokens expire after 1hr so we can't really persist them, but try anyway
+  const t1 = sessionStorage.getItem('oa_tok1');
+  const t2 = sessionStorage.getItem('oa_tok2');
+  if (t1) { token1 = t1; setAcctState(1, true); }
+  if (t2) { token2 = t2; setAcctState(2, true); }
+  checkRunnable();
+}
+
+function setAcctState(acct, ok) {
+  document.getElementById('dot'+acct).className = 'dot' + (ok?' on':'');
+  document.getElementById('lbl'+acct).textContent = ok ? 'Signed in ✓' : 'Not signed in';
+  document.getElementById('lbl'+acct).style.color = ok ? 'var(--green)' : 'var(--muted)';
+  document.getElementById('btn'+acct).textContent = ok ? 'Re-sign in' : 'Sign in';
+  if (ok) {
+    if (acct===1) sessionStorage.setItem('oa_tok1', token1);
+    if (acct===2) sessionStorage.setItem('oa_tok2', token2);
   }
 }
 
-function setAuthState(ok) {
-  document.getElementById('auth-dot').className = 'dot ' + (ok ? 'green' : 'red');
-  document.getElementById('auth-label').textContent = ok ? 'Signed in' : 'Not signed in';
-  document.getElementById('auth-btn').textContent = ok ? 'Switch account' : 'Sign in with Google';
-  if (ok) document.getElementById('run-btn').disabled = false;
+function checkRunnable() {
+  // Need at least token1 to run (sheets + one gmail)
+  document.getElementById('run-btn').disabled = !token1;
+  if (token1 && !token2) addLog('Warning: only Account 1 signed in — orders in yousefbooksaz inbox will be missed', 'w');
 }
 
 // ─── GMAIL API ────────────────────────────────────────────────────────────────
-async function gmailSearch(query, maxResults = 10) {
-  const r = await gFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${maxResults}`);
-  return r.messages || [];
+async function gmailSearchBoth(query, max=5) {
+  // Search both accounts, return combined results tagged with which token
+  const results = [];
+  if (token1) {
+    try {
+      const d = await gFetch(token1, `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);
+      for (const m of (d.messages||[])) results.push({id:m.id, tok:token1});
+    } catch(e) { if(e.message==='AUTH1') throw e; }
+  }
+  if (token2) {
+    try {
+      const d = await gFetch(token2, `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);
+      for (const m of (d.messages||[])) results.push({id:m.id, tok:token2});
+    } catch(e) { if(e.message==='AUTH2') throw e; }
+  }
+  return results;
 }
 
-async function gmailGetMessage(id) {
-  return await gFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`);
+async function gmailGetMsg(tok, id) {
+  return gFetch(tok, `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`);
 }
 
-async function gFetch(url, opts = {}) {
+async function gFetch(tok, url, opts={}) {
   const r = await fetch(url, {
     ...opts,
-    headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json', ...(opts.headers || {}) }
+    headers: {Authorization:'Bearer '+tok,'Content-Type':'application/json',...(opts.headers||{})}
   });
-  if (!r.ok) throw new Error(`API ${r.status}: ${await r.text()}`);
+  if (r.status===401) {
+    if (tok===token1) throw new Error('AUTH1');
+    throw new Error('AUTH2');
+  }
+  if (!r.ok) throw new Error('API '+r.status);
   return r.json();
 }
 
-function extractHtmlBody(msg) {
-  // Walk MIME parts to find text/html
-  function walk(part) {
-    if (!part) return null;
-    if (part.mimeType === 'text/html' && part.body?.data) {
-      return atob(part.body.data.replace(/-/g,'+').replace(/_/g,'/'));
-    }
-    if (part.parts) {
-      for (const p of part.parts) {
-        const r = walk(p);
-        if (r) return r;
-      }
-    }
+function getHtml(msg) {
+  function w(p){
+    if(!p)return null;
+    if(p.mimeType==='text/html'&&p.body?.data) return atob(p.body.data.replace(/-/g,'+').replace(/_/g,'/'));
+    if(p.parts){for(const x of p.parts){const r=w(x);if(r)return r;}}
     return null;
   }
-  return walk(msg.payload) || '';
+  return w(msg.payload)||'';
 }
 
-function extractTextBody(msg) {
-  function walk(part) {
-    if (!part) return null;
-    if (part.mimeType === 'text/plain' && part.body?.data) {
-      return atob(part.body.data.replace(/-/g,'+').replace(/_/g,'/'));
-    }
-    if (part.parts) {
-      for (const p of part.parts) {
-        const r = walk(p);
-        if (r) return r;
-      }
-    }
-    return null;
+function strip(h){return h.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&#\d+;/g,' ').replace(/\s+/g,' ');}
+
+function findNums(t){
+  const ps=[/\b(1Z[A-Z0-9]{16})\b/g,/\b(9[2-6]\d{20})\b/g,/\b(4996\d{18})\b/g,/\b(4997\d{18})\b/g,/\b(4998\d{18})\b/g,/\b(4999\d{18})\b/g,/\b(500\d{19})\b/g,/\b(501\d{19})\b/g,/\b(887\d{9})\b/g,/\b(397\d{9})\b/g,/\b(398\d{9})\b/g,/\b(494\d{9})\b/g,/\b(497\d{9})\b/g,/\b(499\d{9})\b/g];
+  const f=new Set();
+  for(const p of ps)for(const m of t.matchAll(p))f.add(m[1]);
+  return[...f];
+}
+
+function nearTracking(t){
+  const i=t.toUpperCase().indexOf('TRACKING');
+  if(i===-1)return[];
+  return findNums(t.slice(i,i+500));
+}
+
+// ─── PARSERS ──────────────────────────────────────────────────────────────────
+async function parseSierra(id){
+  const msgs = await gmailSearchBoth(`"${id}" from:sierra@tr.tjx.com`);
+  if(!msgs.length) return null;
+  // prefer "on its way" email
+  let best = msgs[0];
+  for(const m of msgs){
+    const full = await gmailGetMsg(m.tok, m.id);
+    const subj = full.payload?.headers?.find(h=>h.name==='Subject')?.value||'';
+    if(subj.toLowerCase().includes('on its way')){best={...m,full};break;}
   }
-  return walk(msg.payload) || '';
+  const msg = best.full || await gmailGetMsg(best.tok, best.id);
+  const html = getHtml(msg);
+  if(!html)return null;
+  const st = strip(html);
+  let n = nearTracking(st);
+  if(!n.length) n = findNums(st);
+  return n.length?n.join(' '):null;
 }
 
-// ─── TRACKING PARSERS ─────────────────────────────────────────────────────────
-
-async function parseSierra(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" from:sierra@tr.tjx.com subject:"on its way"`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
-
-  // Sierra HTML has tracking numbers near "TRACKING:" label
-  // Pattern: links with trackingNumber in href, or plain numbers near "tracking" text
-  const trackNums = [];
-
-  // Try: href contains fedex.com or similar with tracking number
-  const hrefMatches = html.matchAll(/href="[^"]*(?:trkcde|tracknumbers|tracknum|track)[^"]*?(\d{12,22})[^"]*"/gi);
-  for (const m of hrefMatches) trackNums.push(m[1]);
-
-  // Try: text nodes near "TRACKING" — look for sequences of digits 12-22 chars
-  // Sierra uses FedEx SmartPost: usually 22-digit numbers starting with 4996...
-  if (!trackNums.length) {
-    // Strip tags and look for numbers near "TRACKING"
-    const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-    const trackIdx = stripped.toUpperCase().indexOf('TRACKING');
-    if (trackIdx !== -1) {
-      const nearby = stripped.slice(trackIdx, trackIdx + 300);
-      const nums = nearby.match(/\b(4\d{21}|499\d{9}|500\d{9}|501\d{9}|887\d{9}|1Z[A-Z0-9]{16}|9\d{21})\b/g);
-      if (nums) trackNums.push(...nums);
-    }
-  }
-
-  // Fallback: find all 12-22 digit numbers in the full stripped text
-  if (!trackNums.length) {
-    const stripped = html.replace(/<[^>]+>/g, ' ');
-    const allNums = stripped.match(/\b\d{20,22}\b/g) || [];
-    // Filter to likely FedEx SmartPost (starts with 4996 or 9261 etc)
-    const likely = allNums.filter(n => /^(4996|4997|4998|4999|5000|5001|9261|9400|9274)/.test(n));
-    trackNums.push(...likely);
-  }
-
-  return [...new Set(trackNums)].join(' ') || null;
+async function parseLots888(id){
+  const msgs = await gmailSearchBoth(`"${id}" shipped`);
+  if(!msgs.length)return null;
+  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
+  const n = findNums(strip(getHtml(msg)));
+  return n.length?n.join(' '):null;
 }
 
-async function parse888lots(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" shipped tracking`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
-
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-  const nums = stripped.match(/\b(1Z[A-Z0-9]{16}|9\d{21}|\d{20,22})\b/g);
-  return nums ? [...new Set(nums)].join(' ') : null;
+async function parseSamsClub(id){
+  const msgs = await gmailSearchBoth(`"${id}" from:samsclub.com`);
+  if(!msgs.length)return null;
+  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
+  const st = strip(getHtml(msg));
+  let n = nearTracking(st);
+  if(!n.length) n = findNums(st);
+  return n.length?n.join(' '):null;
 }
 
-async function parseSamsClub(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" from:samsclub.com shipped`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
-
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-  // Look near "tracking" keyword
-  const trackIdx = stripped.toUpperCase().indexOf('TRACKING');
-  if (trackIdx === -1) return null;
-  const nearby = stripped.slice(trackIdx, trackIdx + 400);
-  const nums = nearby.match(/\b(1Z[A-Z0-9]{16}|9\d{21}|\d{12,22})\b/g);
-  return nums ? [...new Set(nums)].join(' ') : null;
+async function parseRackRoom(id){
+  const msgs = await gmailSearchBoth(`"${id}" from:rackroom`);
+  if(!msgs.length)return null;
+  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
+  const st = strip(getHtml(msg));
+  const idx = st.indexOf(id);
+  const sec = idx!==-1?st.slice(idx,idx+600):st;
+  const n = findNums(sec);
+  return n.length?n.join(' '):null;
 }
 
-async function parseRackRoom(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" from:rackroom shipped tracking`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
-
-  // Rack Room: order ID and tracking both in HTML — find tracking near this order ID
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-  const orderIdx = stripped.indexOf(orderId);
-  if (orderIdx === -1) return null;
-  const nearby = stripped.slice(orderIdx, orderIdx + 500);
-  const nums = nearby.match(/\b(1Z[A-Z0-9]{16}|9\d{21}|\d{20,22})\b/g);
-  return nums ? [...new Set(nums)].join(' ') : null;
+async function parseMacys(id){
+  const msgs = await gmailSearchBoth(`"${id}" from:macys.com shipped`);
+  if(!msgs.length)return null;
+  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
+  const st = strip(getHtml(msg));
+  let n = nearTracking(st);
+  if(!n.length) n = findNums(st);
+  return n.length?n.join(' '):null;
 }
 
-async function parseMacys(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" from:macys.com shipped`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
-
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-  const trackIdx = stripped.toUpperCase().indexOf('TRACKING');
-  if (trackIdx === -1) return null;
-  const nearby = stripped.slice(trackIdx, trackIdx + 400);
-  const nums = nearby.match(/\b(1Z[A-Z0-9]{16}|9\d{21}|\d{12,22})\b/g);
-  return nums ? [...new Set(nums)].join(' ') : null;
+async function parseDTLR(id){
+  const msgs = await gmailSearchBoth(`"${id}" from:dtlr.com`);
+  if(!msgs.length)return null;
+  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
+  const n = findNums(strip(getHtml(msg)));
+  return n.length?n.join(' '):null;
 }
 
-async function parseDTLR(orderId) {
-  const msgs = await gmailSearch(`"${orderId}" from:dtlr.com shipped`);
-  if (!msgs.length) return null;
-  const msg = await gmailGetMessage(msgs[0].id);
-  const html = extractHtmlBody(msg);
-  if (!html) return null;
+const PARSERS={sierra:parseSierra,lots888:parseLots888,samsclub:parseSamsClub,rackroom:parseRackRoom,macys:parseMacys,dtlr:parseDTLR};
 
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ');
-  const nums = stripped.match(/\b(1Z[A-Z0-9]{16}|9\d{21}|\d{20,22})\b/g);
-  return nums ? [...new Set(nums)].join(' ') : null;
+// ─── SHEETS ───────────────────────────────────────────────────────────────────
+async function shRead(range){
+  const enc = encodeURIComponent(`'${SHEET_NAME}'!${range}`);
+  const d = await gFetch(token1, `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}`);
+  return d.values||[];
 }
 
-// ─── SHEETS API ───────────────────────────────────────────────────────────────
-async function sheetsRead(range) {
-  const enc = encodeURIComponent(`'${SHEET_NAME()}'!${range}`);
-  const r = await gFetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID()}/values/${enc}`);
-  return r.values || [];
+async function shBatchWrite(updates){
+  if(!updates.length)return;
+  await gFetch(token1, `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,{
+    method:'POST',
+    body:JSON.stringify({valueInputOption:'RAW',data:updates.map(u=>({range:`'${SHEET_NAME}'!P${u.row}`,values:[[u.value]]}))})
+  });
 }
 
-async function sheetsWrite(range, value) {
-  const enc = encodeURIComponent(`'${SHEET_NAME()}'!${range}`);
-  await gFetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID()}/values/${enc}?valueInputOption=RAW`,
-    { method: 'PUT', body: JSON.stringify({ values: [[value]] }) }
-  );
-}
-
-async function sheetsBatchWrite(updates) {
-  // updates: [{range, value}]
-  await gFetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID()}/values:batchUpdate`,
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        valueInputOption: 'RAW',
-        data: updates.map(u => ({
-          range: `'${SHEET_NAME()}'!${u.range}`,
-          values: [[u.value]]
-        }))
-      })
-    }
-  );
-}
-
-// ─── MAIN AUTOMATION ──────────────────────────────────────────────────────────
-function matchSource(orderId, sourceCol) {
-  for (const [key, src] of Object.entries(SOURCES)) {
-    if (!enabledSources.has(key)) continue;
-    if (src.pattern && src.pattern.test(orderId)) return key;
-    if (src.sourceName && sourceCol?.toLowerCase().includes(src.sourceName)) return key;
+function matchSrc(oid,srcCol){
+  for(const[k,s] of Object.entries(SRC_DEFS)){
+    if(!enabled.has(k))continue;
+    if(s.pat?.test(oid))return k;
+    if(s.srcName&&srcCol?.toLowerCase().includes(s.srcName))return k;
   }
   return null;
 }
 
-async function startRun() {
-  if (!accessToken) { log('Not signed in', 'error'); return; }
-  running = true;
-  stopRequested = false;
-  stats = { scanned: 0, written: 0, skipped: 0 };
-  results = [];
-  updateStats();
-  clearResults();
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
-  document.getElementById('run-btn').style.display = 'none';
-  document.getElementById('stop-btn').style.display = 'block';
-  document.getElementById('log-status').textContent = 'Running…';
+// ─── RUN ──────────────────────────────────────────────────────────────────────
+async function startRun(){
+  if(!token1){addLog('Sign in with Account 1 first','e');return;}
+  stopReq=false;running=true;
+  stats={scanned:0,written:0,skipped:0};
+  document.getElementById('st-scanned').textContent='0';
+  document.getElementById('st-written').textContent='0';
+  document.getElementById('st-skipped').textContent='0';
+  resultsList=[];
+  document.getElementById('res-body').innerHTML='<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--muted);font-family:var(--sans)">Running…</td></tr>';
+  document.getElementById('res-count').textContent='—';
+  document.getElementById('run-btn').style.display='none';
+  document.getElementById('stop-btn').style.display='block';
+  document.getElementById('log-status').textContent='Running…';
+  document.getElementById('prog').style.width='0%';
 
-  log('─── Starting OA Tracking Automation ───', 'bold');
-  log(`Range: rows ${START_ROW()} → ${END_ROW()}`, 'info');
-  log(`Sources: ${[...enabledSources].map(k => SOURCES[k].label).join(', ')}`, 'info');
+  const start=parseInt(document.getElementById('start-row').value)||2;
+  const end=parseInt(document.getElementById('end-row').value)||19158;
+  const batch=parseInt(document.getElementById('batch-sz').value)||50;
+  const total=end-start+1;
+  const seen=new Map();
+  let scanned=0,written=0,skipped=0;
 
-  try {
-    await runAutomation();
-  } catch(e) {
-    log('Fatal error: ' + e.message, 'error');
-    console.error(e);
-  }
+  addLog('─── OA Tracking Automation starting ───','b');
+  addLog(`Rows ${start}→${end} | Sources: ${[...enabled].map(k=>SRC_DEFS[k].label).join(', ')}`);
 
-  running = false;
-  document.getElementById('run-btn').style.display = 'block';
-  document.getElementById('stop-btn').style.display = 'none';
-  document.getElementById('log-status').textContent = 'Done';
-  document.getElementById('progress-bar').style.width = '100%';
-  log(`─── Done. Written: ${stats.written} | Skipped: ${stats.skipped} ───`, 'bold');
-}
+  try{
+    for(let row=start;row<=end;row+=batch){
+      if(stopReq){addLog('Stopped.','w');break;}
+      const bEnd=Math.min(row+batch-1,end);
+      document.getElementById('prog').style.width=((row-start)/total*100)+'%';
+      addLog(`Reading rows ${row}–${bEnd}…`);
 
-function stopRun() {
-  stopRequested = true;
-  log('Stop requested — finishing current batch…', 'warn');
-}
+      const[gV,mV,nV,pV]=await Promise.all([shRead(`G${row}:G${bEnd}`),shRead(`M${row}:M${bEnd}`),shRead(`N${row}:N${bEnd}`),shRead(`P${row}:P${bEnd}`)]);
+      scanned+=bEnd-row+1;
+      document.getElementById('st-scanned').textContent=scanned.toLocaleString();
 
-async function runAutomation() {
-  const start = START_ROW();
-  const end = END_ROW();
-  const total = end - start + 1;
-  const batchSize = BATCH_SIZE();
-
-  // Track processed order IDs to avoid re-searching
-  const processedOrders = new Map(); // orderId -> tracking string
-
-  for (let row = start; row <= end; row += batchSize) {
-    if (stopRequested) break;
-
-    const batchEnd = Math.min(row + batchSize - 1, end);
-    const progress = ((row - start) / total) * 100;
-    document.getElementById('progress-bar').style.width = progress + '%';
-
-    log(`Reading rows ${row}–${batchEnd}…`, 'info');
-
-    // Read cols G (order ID), M (source), N (email), P (existing tracking)
-    const [gVals, mVals, nVals, pVals] = await Promise.all([
-      sheetsRead(`G${row}:G${batchEnd}`),
-      sheetsRead(`M${row}:M${batchEnd}`),
-      sheetsRead(`N${row}:N${batchEnd}`),
-      sheetsRead(`P${row}:P${batchEnd}`)
-    ]);
-
-    stats.scanned += (batchEnd - row + 1);
-    updateStats();
-
-    // Group rows by order ID
-    const orderGroups = new Map(); // orderId -> {rows:[], source, email, hasTracking}
-
-    for (let i = 0; i < (batchEnd - row + 1); i++) {
-      const orderId = (gVals[i]?.[0] || '').trim();
-      const sourceCol = (mVals[i]?.[0] || '').trim();
-      const emailCol = (nVals[i]?.[0] || '').trim().toLowerCase();
-      const existingTracking = (pVals[i]?.[0] || '').trim();
-      const actualRow = row + i;
-
-      if (!orderId) continue;
-      if (existingTracking) continue; // already has tracking
-
-      // Skip inaccessible inboxes
-      if (SKIP_INBOXES.has(emailCol)) continue;
-
-      const srcKey = matchSource(orderId, sourceCol);
-      if (!srcKey) continue;
-
-      if (!orderGroups.has(orderId)) {
-        orderGroups.set(orderId, { rows: [], sourceKey: srcKey, sourceCol, emailCol });
-      }
-      orderGroups.get(orderId).rows.push(actualRow);
-    }
-
-    if (orderGroups.size === 0) continue;
-
-    log(`Found ${orderGroups.size} processable order(s) in batch`, 'info');
-
-    // Process each order
-    const writes = [];
-    for (const [orderId, group] of orderGroups) {
-      if (stopRequested) break;
-
-      // Already processed this order earlier in the run
-      if (processedOrders.has(orderId)) {
-        const cached = processedOrders.get(orderId);
-        if (cached) {
-          for (const r of group.rows) writes.push({ range: `P${r}`, value: cached });
-          log(`${orderId} → cached: ${cached}`, 'write');
-          addResult(orderId, SOURCES[group.sourceKey].label, group.rows, cached, 'written');
-          stats.written += group.rows.length;
-        }
-        continue;
+      const groups=new Map();
+      for(let i=0;i<bEnd-row+1;i++){
+        const oid=(gV[i]?.[0]||'').trim();
+        const srcCol=(mV[i]?.[0]||'').trim();
+        const email=(nV[i]?.[0]||'').trim().toLowerCase();
+        const existing=(pV[i]?.[0]||'').trim();
+        const r=row+i;
+        if(!oid||existing||SKIP.has(email))continue;
+        const sk=matchSrc(oid,srcCol);
+        if(!sk)continue;
+        if(!groups.has(oid))groups.set(oid,{rows:[],sk});
+        groups.get(oid).rows.push(r);
       }
 
-      log(`Searching: ${orderId} (${SOURCES[group.sourceKey].label})…`, 'info');
+      if(!groups.size){await sleep(80);continue;}
+      addLog(`${groups.size} order(s) found in batch`);
 
-      try {
-        const tracking = await SOURCES[group.sourceKey].findTracking(orderId);
-        processedOrders.set(orderId, tracking);
-
-        if (tracking) {
-          for (const r of group.rows) writes.push({ range: `P${r}`, value: tracking });
-          log(`✓ ${orderId} → ${tracking}`, 'success');
-          addResult(orderId, SOURCES[group.sourceKey].label, group.rows, tracking, 'written');
-          stats.written += group.rows.length;
+      const writes=[];
+      for(const[oid,g] of groups){
+        if(stopReq)break;
+        let trk;
+        if(seen.has(oid)){
+          trk=seen.get(oid);
         } else {
-          log(`✗ ${orderId} — no tracking found`, 'warn');
-          addResult(orderId, SOURCES[group.sourceKey].label, group.rows, '—', 'failed');
-          stats.skipped++;
+          addLog(`Searching: ${oid} (${SRC_DEFS[g.sk].label})…`);
+          try{
+            trk=await PARSERS[g.sk](oid);
+            seen.set(oid,trk);
+          } catch(e){
+            if(e.message==='AUTH1'){addLog('Account 1 token expired — please re-sign in','e');stopReq=true;break;}
+            if(e.message==='AUTH2'){addLog('Account 2 token expired — please re-sign in','w');token2=null;setAcctState(2,false);}
+            else {addLog(`✗ ${oid} — ${e.message}`,'e');}
+            skipped++;document.getElementById('st-skipped').textContent=skipped;
+            addResult(oid,SRC_DEFS[g.sk].label,g.rows,'ERROR','failed');
+            continue;
+          }
         }
-      } catch(e) {
-        log(`✗ ${orderId} — error: ${e.message}`, 'error');
-        addResult(orderId, SOURCES[group.sourceKey].label, group.rows, 'ERROR', 'failed');
-        stats.skipped++;
+        if(trk){
+          for(const r of g.rows)writes.push({row:r,value:trk});
+          written+=g.rows.length;
+          document.getElementById('st-written').textContent=written.toLocaleString();
+          addLog(`✓ ${oid} → ${trk}`,'s');
+          addResult(oid,SRC_DEFS[g.sk].label,g.rows,trk,'written');
+        } else {
+          skipped++;
+          document.getElementById('st-skipped').textContent=skipped;
+          addLog(`✗ ${oid} — no tracking found`,'w');
+          addResult(oid,SRC_DEFS[g.sk].label,g.rows,'—','skipped');
+        }
+        await sleep(300);
       }
 
-      updateStats();
-      await sleep(300); // rate limit buffer
-    }
-
-    // Batch write all at once
-    if (writes.length) {
-      try {
-        await sheetsBatchWrite(writes);
-        log(`Wrote ${writes.length} cell(s) to sheet`, 'write');
-      } catch(e) {
-        log('Sheet write error: ' + e.message, 'error');
+      if(writes.length){
+        try{await shBatchWrite(writes);addLog(`Wrote ${writes.length} cell(s) to sheet ✓`,'wr');}
+        catch(e){addLog('Sheet write error: '+e.message,'e');}
       }
+      await sleep(150);
     }
+  } catch(e){addLog('Fatal: '+e.message,'e');}
 
-    await sleep(200);
+  document.getElementById('prog').style.width='100%';
+  document.getElementById('run-btn').style.display='block';
+  document.getElementById('stop-btn').style.display='none';
+  document.getElementById('log-status').textContent='Done';
+  running=false;
+  addLog(`─── Done. Written: ${written} | Skipped: ${skipped} ───`,'b');
+}
+
+function doStop(){stopReq=true;addLog('Stop requested…','w');}
+
+// ─── UI ───────────────────────────────────────────────────────────────────────
+function nt(){return new Date().toTimeString().slice(0,8);}
+function addLog(msg,type=''){
+  const el=document.getElementById('log');
+  const d=document.createElement('div');
+  d.className='ll';
+  d.innerHTML=`<span class="lt">${nt()}</span><span class="lm ${type}">${msg}</span>`;
+  el.appendChild(d);
+  el.scrollTop=el.scrollHeight;
+}
+
+function addResult(oid,src,rows,tracking,status){
+  const tb=document.getElementById('res-body');
+  if(tb.querySelector('td[colspan]'))tb.innerHTML='';
+  const rstr=rows.length===1?rows[0]:`${rows[0]}–${rows[rows.length-1]}`;
+  const td=tracking.length>26?tracking.slice(0,24)+'…':tracking;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td style="color:var(--text)">${oid}</td><td><span class="tag">${src}</span></td><td>${rstr}</td><td title="${tracking}">${td}</td><td><span class="badge ${status}">${status}</span></td>`;
+  tb.insertBefore(tr,tb.firstChild);
+  resultsList.unshift({oid,src,rows,tracking,status});
+  document.getElementById('res-count').textContent=resultsList.length+' orders';
+}
+
+function buildSources(){
+  const c=document.getElementById('sources-ui');
+  for(const[k,s] of Object.entries(SRC_DEFS)){
+    const d=document.createElement('label');
+    d.className='src on';
+    d.dataset.key=k;
+    d.innerHTML=`<input type="checkbox" checked style="accent-color:var(--accent)"> ${s.label}`;
+    d.querySelector('input').addEventListener('change',e=>{
+      if(e.target.checked)enabled.add(k);else enabled.delete(k);
+      d.classList.toggle('on',e.target.checked);
+    });
+    c.appendChild(d);
   }
 }
 
-// ─── UI HELPERS ───────────────────────────────────────────────────────────────
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function log(msg, type = 'info') {
-  const el = document.getElementById('log');
-  const now = new Date();
-  const time = now.toTimeString().slice(0,8);
-  const line = document.createElement('div');
-  line.className = 'log-line';
-  line.innerHTML = `<span class="log-time">${time}</span><span class="log-msg ${type}">${msg}</span>`;
-  el.appendChild(line);
-  el.scrollTop = el.scrollHeight;
-}
-
-function updateStats() {
-  document.getElementById('stat-scanned').textContent = stats.scanned.toLocaleString();
-  document.getElementById('stat-written').textContent = stats.written.toLocaleString();
-  document.getElementById('stat-skipped').textContent = stats.skipped.toLocaleString();
-}
-
-function clearResults() {
-  document.getElementById('results-body').innerHTML =
-    '<tr><td colspan="5"><div class="empty-state">Running…</div></td></tr>';
-  document.getElementById('results-count').textContent = '—';
-}
-
-function addResult(orderId, source, rows, tracking, status) {
-  const tbody = document.getElementById('results-body');
-  // Remove empty state row
-  if (tbody.querySelector('.empty-state')) tbody.innerHTML = '';
-
-  const rowStr = rows.length === 1 ? `${rows[0]}` : `${rows[0]}–${rows[rows.length-1]}`;
-  const trackDisplay = tracking.length > 30 ? tracking.slice(0,28)+'…' : tracking;
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${orderId}</td>
-    <td><span class="tag-pill">${source}</span></td>
-    <td>${rowStr}</td>
-    <td title="${tracking}">${trackDisplay}</td>
-    <td><span class="badge ${status}">${status}</span></td>
-  `;
-  tbody.insertBefore(tr, tbody.firstChild);
-
-  results.push({ orderId, source, rows, tracking, status });
-  document.getElementById('results-count').textContent = results.length + ' orders';
-}
-
-// ─── SOURCES UI ───────────────────────────────────────────────────────────────
-function buildSourcesGrid() {
-  const grid = document.getElementById('sources-grid');
-  for (const [key, src] of Object.entries(SOURCES)) {
-    const tag = document.createElement('label');
-    tag.className = 'source-tag active';
-    tag.innerHTML = `<input type="checkbox" checked onchange="toggleSource('${key}', this.checked)"> ${src.label}`;
-    grid.appendChild(tag);
-  }
-}
-
-function toggleSource(key, enabled) {
-  if (enabled) enabledSources.add(key);
-  else enabledSources.delete(key);
-  event.target.closest('.source-tag').classList.toggle('active', enabled);
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-buildSourcesGrid();
+buildSources();
 checkAuthCallback();
-
-// Restore saved client ID
-const savedId = localStorage.getItem('oa_client_id');
-if (savedId) {
-  document.getElementById('auth-btn').textContent = 'Sign in with Google';
-}
-
-log('Ready. Sign in with Google to start.', 'info');
+addLog('Ready. Sign in with both Google accounts to start.');
 </script>
 </body>
 </html>
