@@ -6,20 +6,14 @@
 <title>OA Tracking Automation</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-  :root {
-    --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3350;
-    --accent:#4f6ef7;--accent-dim:#1e2a5e;--green:#22c55e;--green-dim:#14532d;
-    --yellow:#eab308;--red:#ef4444;--red-dim:#7f1d1d;
-    --text:#e8eaf6;--muted:#6b7280;--dim:#9ca3af;
-    --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
-  }
+  :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3350;--accent:#4f6ef7;--accent-dim:#1e2a5e;--green:#22c55e;--green-dim:#14532d;--yellow:#eab308;--red:#ef4444;--red-dim:#7f1d1d;--text:#e8eaf6;--muted:#6b7280;--dim:#9ca3af;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;padding:24px}
-  h1{font-size:16px;font-weight:700}
-  .sub{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
   .logo{display:flex;align-items:center;gap:10px}
   .logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  h1{font-size:16px;font-weight:700}
+  .sub{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px}
   .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
   .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
   .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px}
@@ -36,7 +30,7 @@
   .sources{display:flex;flex-wrap:wrap;gap:7px}
   .src{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:6px 11px;font-size:12px;cursor:pointer;user-select:none;color:var(--dim)}
   .src.on{border-color:var(--accent);background:var(--accent-dim);color:var(--text)}
-  .run-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;transition:opacity .15s}
+  .run-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px}
   .run-btn:disabled{opacity:.35;cursor:not-allowed}
   .stop-btn{width:100%;padding:9px;background:transparent;color:var(--red);border:1px solid var(--red);border-radius:9px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px;display:none}
   .prog-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:12px;overflow:hidden}
@@ -47,23 +41,19 @@
   .ll{display:flex;gap:8px}
   .lt{color:var(--muted);flex-shrink:0}
   .lm{color:var(--dim)}
-  .lm.s{color:var(--green)}
-  .lm.w{color:var(--yellow)}
-  .lm.e{color:var(--red)}
-  .lm.wr{color:#818cf8}
-  .lm.b{color:var(--text);font-weight:500}
+  .lm.s{color:var(--green)}.lm.w{color:var(--yellow)}.lm.e{color:var(--red)}.lm.wr{color:#818cf8}.lm.b{color:var(--text);font-weight:500}
   .auth-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
   .auth-title{font-size:13px;font-weight:600;margin-bottom:10px}
   .auth-accounts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
   .acct{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px}
-  .acct-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-  .acct-email{font-size:12px;color:var(--dim);font-family:var(--mono);margin-bottom:8px}
-  .acct-status{display:flex;align-items:center;gap:6px;font-size:12px}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+  .acct-label{font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .acct-email{font-size:11px;color:var(--dim);font-family:var(--mono);margin-bottom:8px}
+  .acct-status{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:8px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0}
   .dot.on{background:var(--green);box-shadow:0 0 5px var(--green)}
   .acct-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);border:1px solid var(--border);background:var(--surface);color:var(--text)}
   .acct-btn.primary{background:var(--accent);color:#fff;border-color:transparent}
-  .cid-row{display:flex;gap:8px;align-items:center}
+  .cid-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
   .cid-inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:var(--mono);outline:none}
   .cid-inp:focus{border-color:var(--accent)}
   .results-tbl{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
@@ -81,44 +71,31 @@
 <header>
   <div class="logo">
     <div class="logo-icon">📦</div>
-    <div>
-      <h1>OA Tracking Automation</h1>
-      <div class="sub">Gmail HTML → Google Sheets</div>
-    </div>
+    <div><h1>OA Tracking Automation</h1><div class="sub">Gmail HTML → Google Sheets</div></div>
   </div>
 </header>
 
-<!-- AUTH PANEL -->
-<div class="auth-panel" id="auth-panel">
-  <div class="auth-title">Google accounts</div>
-  <div style="margin-bottom:10px">
-    <div style="font-size:12px;color:var(--dim);margin-bottom:6px">Client ID</div>
-    <div class="cid-row">
-      <input class="cid-inp" id="cid-inp" placeholder="Paste your OAuth Client ID here" />
-      <button class="acct-btn primary" onclick="saveCid()">Save</button>
-    </div>
+<div class="auth-panel">
+  <div class="auth-title">Setup</div>
+  <div class="cid-row">
+    <input class="cid-inp" id="cid-inp" placeholder="Paste your OAuth Client ID here" />
+    <button class="acct-btn primary" onclick="saveCid()">Save</button>
   </div>
   <div class="auth-accounts">
     <div class="acct">
       <div class="acct-label">Account 1 — Gmail + Sheets</div>
       <div class="acct-email">voaderainc@gmail.com</div>
-      <div class="acct-status">
-        <div class="dot" id="dot1"></div>
-        <span id="lbl1" style="color:var(--muted)">Not signed in</span>
-      </div>
-      <div style="margin-top:8px"><button class="acct-btn" id="btn1" onclick="signIn(1)">Sign in</button></div>
+      <div class="acct-status"><div class="dot" id="dot1"></div><span id="lbl1" style="color:var(--muted)">Not signed in</span></div>
+      <button class="acct-btn" id="btn1" onclick="signIn(1)">Sign in</button>
     </div>
     <div class="acct">
       <div class="acct-label">Account 2 — Gmail only</div>
       <div class="acct-email">yousefbooksaz@gmail.com</div>
-      <div class="acct-status">
-        <div class="dot" id="dot2"></div>
-        <span id="lbl2" style="color:var(--muted)">Not signed in</span>
-      </div>
-      <div style="margin-top:8px"><button class="acct-btn" id="btn2" onclick="signIn(2)">Sign in</button></div>
+      <div class="acct-status"><div class="dot" id="dot2"></div><span id="lbl2" style="color:var(--muted)">Not signed in</span></div>
+      <button class="acct-btn" id="btn2" onclick="signIn(2)">Sign in</button>
     </div>
   </div>
-  <div style="font-size:11px;color:var(--muted)">Sign in with both accounts. Account 1 also writes to the sheet.</div>
+  <div style="font-size:11px;color:var(--muted)">Each sign-in opens a popup — both accounts stay active at the same time.</div>
 </div>
 
 <div class="stats">
@@ -135,15 +112,13 @@
         <div class="row"><span class="lbl">Start row</span><input class="inp" id="start-row" value="2694"></div>
         <div class="row"><span class="lbl">End row</span><input class="inp" id="end-row" value="19158"></div>
         <div class="row"><span class="lbl">Batch size</span><input class="inp" id="batch-sz" value="50"></div>
-        <div class="row"><span class="lbl">Sheet ID</span><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA</span></div>
+        <div class="row"><span class="lbl">Sheet ID</span><span style="font-family:var(--mono);font-size:10px;color:var(--muted)">1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA</span></div>
       </div>
     </div>
-
     <div class="panel">
       <div class="ph">Sources <span style="font-size:11px;color:var(--muted);font-weight:400">toggle to include/exclude</span></div>
       <div class="pb"><div class="sources" id="sources-ui"></div></div>
     </div>
-
     <div class="panel">
       <div class="ph">Results <span id="res-count" style="font-size:11px;color:var(--muted);font-weight:400">—</span></div>
       <div style="max-height:280px;overflow-y:auto">
@@ -154,7 +129,6 @@
       </div>
     </div>
   </div>
-
   <div>
     <button class="run-btn" id="run-btn" onclick="startRun()" disabled>▶ Run Automation</button>
     <button class="stop-btn" id="stop-btn" onclick="doStop()">■ Stop</button>
@@ -167,157 +141,88 @@
 </div>
 
 <script>
-const SHEET_ID = '1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA';
-const SHEET_NAME = 'Oa purchases 2026';
-const SCOPES_FULL = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/spreadsheets';
-const SCOPES_GMAIL = 'https://www.googleapis.com/auth/gmail.readonly';
+const SHEET_ID='1qcQcdvrpKNa3y_oBGK40xeZSUvX4gvLFcNsgkvq5yOA';
+const SHEET_NAME='Oa purchases 2026';
+const SCOPES_FULL='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/spreadsheets';
+const SCOPES_GMAIL='https://www.googleapis.com/auth/gmail.readonly';
+const SKIP=new Set(['saeedryiad.jme@gmail.com','mamoon.jmegoods@gmail.com','oa.jmegoods@gmail.com','daniaalwai.jme@gmail.com','salman.jmegoodss@gmail.com','raeisabooks@gmail.com','voaderatools@gmail.com','abdullahieisabooks@gmail.com','fariseisabooks@gmail.com','belal.voadera@gmail.com','elwani1995@gmail.com']);
+const SRC_DEFS={sierra:{label:'Sierra / TJX',pat:/^E4[34]\d{6}$/},lots888:{label:'888lots',pat:/^267\d{7}$/},samsclub:{label:"Sam's Club",pat:/^103\d{7}$/},rackroom:{label:'Rack Room',pat:/^4713\d{6}$/},macys:{label:"Macy's",pat:null,srcName:'macy'},dtlr:{label:'DTLR',pat:/^50(46|58)\d{3}$/}};
 
-const SKIP = new Set(['saeedryiad.jme@gmail.com','mamoon.jmegoods@gmail.com','oa.jmegoods@gmail.com','daniaalwai.jme@gmail.com','salman.jmegoodss@gmail.com','raeisabooks@gmail.com','voaderatools@gmail.com','abdullahieisabooks@gmail.com','fariseisabooks@gmail.com','belal.voadera@gmail.com','elwani1995@gmail.com']);
+let token1=null,token2=null;
+let running=false,stopReq=false;
+let enabled=new Set(Object.keys(SRC_DEFS));
+let resultsList=[];
 
-const SRC_DEFS = {
-  sierra:   {label:'Sierra / TJX', pat:/^E4[34]\d{6}$/},
-  lots888:  {label:'888lots',       pat:/^267\d{7}$/},
-  samsclub: {label:"Sam's Club",    pat:/^103\d{7}$/},
-  rackroom: {label:'Rack Room',     pat:/^4713\d{6}$/},
-  macys:    {label:"Macy's",        pat:null, srcName:'macy'},
-  dtlr:     {label:'DTLR',          pat:/^50(46|58)\d{3}$/},
-};
+// ── CLIENT ID ──
+function saveCid(){
+  const v=document.getElementById('cid-inp').value.trim();
+  if(!v)return;
+  localStorage.setItem('oa_cid',v);
+  addLog('Client ID saved ✓','s');
+}
+function getCid(){return localStorage.getItem('oa_cid')||document.getElementById('cid-inp').value.trim();}
 
-// Two tokens: token1 = voaderainc (sheets+gmail), token2 = yousefbooksaz (gmail only)
-let token1 = null, token2 = null;
-let pendingSignIn = null;
-let running = false, stopReq = false;
-let stats = {scanned:0,written:0,skipped:0};
-let enabled = new Set(Object.keys(SRC_DEFS));
-let resultsList = [];
-
-// ─── CLIENT ID ────────────────────────────────────────────────────────────────
-function saveCid() {
-  const v = document.getElementById('cid-inp').value.trim();
-  if (!v) return;
-  localStorage.setItem('oa_cid', v);
-  addLog('Client ID saved ✓', 's');
+// ── AUTH via popup ──
+function signIn(acct){
+  const cid=getCid();
+  if(!cid){alert('Save your Client ID first');return;}
+  const scope=acct===1?SCOPES_FULL:SCOPES_GMAIL;
+  const redirectUri=window.location.href.split('?')[0].split('#')[0];
+  const params=new URLSearchParams({client_id:cid,redirect_uri:redirectUri,response_type:'token',scope,prompt:'select_account'});
+  const url='https://accounts.google.com/o/oauth2/v2/auth?'+params;
+  const popup=window.open(url,'oauth_popup','width=520,height=620,left=200,top=100');
+  if(!popup){addLog('Popup blocked — allow popups for this site','e');return;}
+  addLog(`Opening Google sign-in for Account ${acct}…`,'w');
+  // Poll popup for token in URL hash
+  const poll=setInterval(()=>{
+    try{
+      if(popup.closed){clearInterval(poll);addLog('Sign-in popup closed','w');return;}
+      const hash=popup.location.hash;
+      if(hash&&hash.includes('access_token')){
+        clearInterval(poll);
+        popup.close();
+        const p=new URLSearchParams(hash.slice(1));
+        const tok=p.get('access_token');
+        if(acct===1){token1=tok;setAcctState(1,true);addLog('Account 1 (voaderainc) signed in ✓','s');}
+        else{token2=tok;setAcctState(2,true);addLog('Account 2 (yousefbooksaz) signed in ✓','s');}
+        checkRunnable();
+      }
+    }catch(e){/* cross-origin during redirect, ignore */}
+  },500);
 }
 
-function getCid() {
-  return localStorage.getItem('oa_cid') || document.getElementById('cid-inp').value.trim();
+function setAcctState(acct,ok){
+  document.getElementById('dot'+acct).className='dot'+(ok?' on':'');
+  document.getElementById('lbl'+acct).textContent=ok?'Signed in ✓':'Not signed in';
+  document.getElementById('lbl'+acct).style.color=ok?'var(--green)':'var(--muted)';
+  document.getElementById('btn'+acct).textContent=ok?'Re-sign in':'Sign in';
 }
 
-// ─── AUTH ─────────────────────────────────────────────────────────────────────
-function signIn(acct) {
-  const cid = getCid();
-  if (!cid) { alert('Save your Client ID first'); return; }
-  pendingSignIn = acct;
-  localStorage.setItem('oa_pending', acct);
-  const scope = acct === 1 ? SCOPES_FULL : SCOPES_GMAIL;
-  const params = new URLSearchParams({
-    client_id: cid,
-    redirect_uri: window.location.href.split('?')[0].split('#')[0],
-    response_type: 'token',
-    scope: scope,
-    prompt: 'select_account'
-  });
-  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params;
+function checkRunnable(){
+  document.getElementById('run-btn').disabled=!token1;
+  if(token1&&!token2)addLog('Warning: Account 2 not signed in — yousefbooksaz emails will be missed','w');
+  if(token1&&token2)addLog('Both accounts ready — click Run Automation','s');
 }
 
-function checkAuthCallback() {
-  const hash = window.location.hash;
-  if (!hash.includes('access_token')) {
-    const saved = localStorage.getItem('oa_cid');
-    if (saved) document.getElementById('cid-inp').value = saved;
-    loadSavedTokens();
-    return;
-  }
-  const params = new URLSearchParams(hash.slice(1));
-  const tok = params.get('access_token');
-  const acct = parseInt(localStorage.getItem('oa_pending') || '1');
-  window.history.replaceState({}, '', window.location.pathname);
-  localStorage.removeItem('oa_pending');
-  if (acct === 1) {
-    token1 = tok;
-    localStorage.setItem('oa_tok1', tok);
-    setAcctState(1, true);
-    addLog('Account 1 (voaderainc) signed in ✓', 's');
-  } else {
-    token2 = tok;
-    localStorage.setItem('oa_tok2', tok);
-    setAcctState(2, true);
-    addLog('Account 2 (yousefbooksaz) signed in ✓', 's');
-  }
-  checkRunnable();
-  const saved = localStorage.getItem('oa_cid');
-  if (saved) document.getElementById('cid-inp').value = saved;
-}
-
-function loadSavedTokens() {
-  // Tokens expire after 1hr so we can't really persist them, but try anyway
-  const t1 = sessionStorage.getItem('oa_tok1');
-  const t2 = sessionStorage.getItem('oa_tok2');
-  if (t1) { token1 = t1; setAcctState(1, true); }
-  if (t2) { token2 = t2; setAcctState(2, true); }
-  checkRunnable();
-}
-
-function setAcctState(acct, ok) {
-  document.getElementById('dot'+acct).className = 'dot' + (ok?' on':'');
-  document.getElementById('lbl'+acct).textContent = ok ? 'Signed in ✓' : 'Not signed in';
-  document.getElementById('lbl'+acct).style.color = ok ? 'var(--green)' : 'var(--muted)';
-  document.getElementById('btn'+acct).textContent = ok ? 'Re-sign in' : 'Sign in';
-  if (ok) {
-    if (acct===1) sessionStorage.setItem('oa_tok1', token1);
-    if (acct===2) sessionStorage.setItem('oa_tok2', token2);
-  }
-}
-
-function checkRunnable() {
-  // Need at least token1 to run (sheets + one gmail)
-  document.getElementById('run-btn').disabled = !token1;
-  if (token1 && !token2) addLog('Warning: only Account 1 signed in — orders in yousefbooksaz inbox will be missed', 'w');
-}
-
-// ─── GMAIL API ────────────────────────────────────────────────────────────────
-async function gmailSearchBoth(query, max=5) {
-  // Search both accounts, return combined results tagged with which token
-  const results = [];
-  if (token1) {
-    try {
-      const d = await gFetch(token1, `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);
-      for (const m of (d.messages||[])) results.push({id:m.id, tok:token1});
-    } catch(e) { if(e.message==='AUTH1') throw e; }
-  }
-  if (token2) {
-    try {
-      const d = await gFetch(token2, `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);
-      for (const m of (d.messages||[])) results.push({id:m.id, tok:token2});
-    } catch(e) { if(e.message==='AUTH2') throw e; }
-  }
+// ── GMAIL ──
+async function gmailSearchBoth(query,max=5){
+  const results=[];
+  if(token1){try{const d=await gf(token1,`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);for(const m of(d.messages||[]))results.push({id:m.id,tok:token1});}catch(e){if(e.message==='AUTH1')throw e;}}
+  if(token2){try{const d=await gf(token2,`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${max}`);for(const m of(d.messages||[]))results.push({id:m.id,tok:token2});}catch(e){if(e.message==='AUTH2'){token2=null;setAcctState(2,false);}}}
   return results;
 }
 
-async function gmailGetMsg(tok, id) {
-  return gFetch(tok, `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`);
-}
+async function gmailGetMsg(tok,id){return gf(tok,`https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`);}
 
-async function gFetch(tok, url, opts={}) {
-  const r = await fetch(url, {
-    ...opts,
-    headers: {Authorization:'Bearer '+tok,'Content-Type':'application/json',...(opts.headers||{})}
-  });
-  if (r.status===401) {
-    if (tok===token1) throw new Error('AUTH1');
-    throw new Error('AUTH2');
-  }
-  if (!r.ok) throw new Error('API '+r.status);
+async function gf(tok,url,opts={}){
+  const r=await fetch(url,{...opts,headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json',...(opts.headers||{})}});
+  if(r.status===401)throw new Error(tok===token1?'AUTH1':'AUTH2');
+  if(!r.ok)throw new Error('API '+r.status);
   return r.json();
 }
 
-function getHtml(msg) {
-  function w(p){
-    if(!p)return null;
-    if(p.mimeType==='text/html'&&p.body?.data) return atob(p.body.data.replace(/-/g,'+').replace(/_/g,'/'));
-    if(p.parts){for(const x of p.parts){const r=w(x);if(r)return r;}}
-    return null;
-  }
+function getHtml(msg){
+  function w(p){if(!p)return null;if(p.mimeType==='text/html'&&p.body?.data)return atob(p.body.data.replace(/-/g,'+').replace(/_/g,'/'));if(p.parts){for(const x of p.parts){const r=w(x);if(r)return r;}}return null;}
   return w(msg.payload)||'';
 }
 
@@ -325,103 +230,72 @@ function strip(h){return h.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replac
 
 function findNums(t){
   const ps=[/\b(1Z[A-Z0-9]{16})\b/g,/\b(9[2-6]\d{20})\b/g,/\b(4996\d{18})\b/g,/\b(4997\d{18})\b/g,/\b(4998\d{18})\b/g,/\b(4999\d{18})\b/g,/\b(500\d{19})\b/g,/\b(501\d{19})\b/g,/\b(887\d{9})\b/g,/\b(397\d{9})\b/g,/\b(398\d{9})\b/g,/\b(494\d{9})\b/g,/\b(497\d{9})\b/g,/\b(499\d{9})\b/g];
-  const f=new Set();
-  for(const p of ps)for(const m of t.matchAll(p))f.add(m[1]);
-  return[...f];
+  const f=new Set();for(const p of ps)for(const m of t.matchAll(p))f.add(m[1]);return[...f];
 }
 
-function nearTracking(t){
-  const i=t.toUpperCase().indexOf('TRACKING');
-  if(i===-1)return[];
-  return findNums(t.slice(i,i+500));
-}
+function nearTracking(t){const i=t.toUpperCase().indexOf('TRACKING');if(i===-1)return[];return findNums(t.slice(i,i+500));}
 
-// ─── PARSERS ──────────────────────────────────────────────────────────────────
+// ── PARSERS ──
 async function parseSierra(id){
-  const msgs = await gmailSearchBoth(`"${id}" from:sierra@tr.tjx.com`);
-  if(!msgs.length) return null;
-  // prefer "on its way" email
-  let best = msgs[0];
-  for(const m of msgs){
-    const full = await gmailGetMsg(m.tok, m.id);
-    const subj = full.payload?.headers?.find(h=>h.name==='Subject')?.value||'';
-    if(subj.toLowerCase().includes('on its way')){best={...m,full};break;}
-  }
-  const msg = best.full || await gmailGetMsg(best.tok, best.id);
-  const html = getHtml(msg);
-  if(!html)return null;
-  const st = strip(html);
-  let n = nearTracking(st);
-  if(!n.length) n = findNums(st);
+  const msgs=await gmailSearchBoth(`"${id}" from:sierra@tr.tjx.com`);
+  if(!msgs.length)return null;
+  let best=msgs[0];
+  for(const m of msgs){const full=await gmailGetMsg(m.tok,m.id);const subj=full.payload?.headers?.find(h=>h.name==='Subject')?.value||'';if(subj.toLowerCase().includes('on its way')){best={...m,full};break;}}
+  const msg=best.full||await gmailGetMsg(best.tok,best.id);
+  const st=strip(getHtml(msg));
+  let n=nearTracking(st);if(!n.length)n=findNums(st);
   return n.length?n.join(' '):null;
 }
 
 async function parseLots888(id){
-  const msgs = await gmailSearchBoth(`"${id}" shipped`);
-  if(!msgs.length)return null;
-  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
-  const n = findNums(strip(getHtml(msg)));
-  return n.length?n.join(' '):null;
+  const msgs=await gmailSearchBoth(`"${id}" shipped`);if(!msgs.length)return null;
+  const msg=await gmailGetMsg(msgs[0].tok,msgs[0].id);
+  const n=findNums(strip(getHtml(msg)));return n.length?n.join(' '):null;
 }
 
 async function parseSamsClub(id){
-  const msgs = await gmailSearchBoth(`"${id}" from:samsclub.com`);
-  if(!msgs.length)return null;
-  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
-  const st = strip(getHtml(msg));
-  let n = nearTracking(st);
-  if(!n.length) n = findNums(st);
+  const msgs=await gmailSearchBoth(`"${id}" from:samsclub.com`);if(!msgs.length)return null;
+  const msg=await gmailGetMsg(msgs[0].tok,msgs[0].id);
+  const st=strip(getHtml(msg));let n=nearTracking(st);if(!n.length)n=findNums(st);
   return n.length?n.join(' '):null;
 }
 
 async function parseRackRoom(id){
-  const msgs = await gmailSearchBoth(`"${id}" from:rackroom`);
-  if(!msgs.length)return null;
-  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
-  const st = strip(getHtml(msg));
-  const idx = st.indexOf(id);
-  const sec = idx!==-1?st.slice(idx,idx+600):st;
-  const n = findNums(sec);
-  return n.length?n.join(' '):null;
+  const msgs=await gmailSearchBoth(`"${id}" from:rackroom`);if(!msgs.length)return null;
+  const msg=await gmailGetMsg(msgs[0].tok,msgs[0].id);
+  const st=strip(getHtml(msg));const idx=st.indexOf(id);const sec=idx!==-1?st.slice(idx,idx+600):st;
+  const n=findNums(sec);return n.length?n.join(' '):null;
 }
 
 async function parseMacys(id){
-  const msgs = await gmailSearchBoth(`"${id}" from:macys.com shipped`);
-  if(!msgs.length)return null;
-  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
-  const st = strip(getHtml(msg));
-  let n = nearTracking(st);
-  if(!n.length) n = findNums(st);
+  const msgs=await gmailSearchBoth(`"${id}" from:macys.com shipped`);if(!msgs.length)return null;
+  const msg=await gmailGetMsg(msgs[0].tok,msgs[0].id);
+  const st=strip(getHtml(msg));let n=nearTracking(st);if(!n.length)n=findNums(st);
   return n.length?n.join(' '):null;
 }
 
 async function parseDTLR(id){
-  const msgs = await gmailSearchBoth(`"${id}" from:dtlr.com`);
-  if(!msgs.length)return null;
-  const msg = await gmailGetMsg(msgs[0].tok, msgs[0].id);
-  const n = findNums(strip(getHtml(msg)));
-  return n.length?n.join(' '):null;
+  const msgs=await gmailSearchBoth(`"${id}" from:dtlr.com`);if(!msgs.length)return null;
+  const msg=await gmailGetMsg(msgs[0].tok,msgs[0].id);
+  const n=findNums(strip(getHtml(msg)));return n.length?n.join(' '):null;
 }
 
 const PARSERS={sierra:parseSierra,lots888:parseLots888,samsclub:parseSamsClub,rackroom:parseRackRoom,macys:parseMacys,dtlr:parseDTLR};
 
-// ─── SHEETS ───────────────────────────────────────────────────────────────────
+// ── SHEETS ──
 async function shRead(range){
-  const enc = encodeURIComponent(`'${SHEET_NAME}'!${range}`);
-  const d = await gFetch(token1, `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}`);
+  const enc=encodeURIComponent(`'${SHEET_NAME}'!${range}`);
+  const d=await gf(token1,`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}`);
   return d.values||[];
 }
 
 async function shBatchWrite(updates){
   if(!updates.length)return;
-  await gFetch(token1, `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,{
-    method:'POST',
-    body:JSON.stringify({valueInputOption:'RAW',data:updates.map(u=>({range:`'${SHEET_NAME}'!P${u.row}`,values:[[u.value]]}))})
-  });
+  await gf(token1,`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,{method:'POST',body:JSON.stringify({valueInputOption:'RAW',data:updates.map(u=>({range:`'${SHEET_NAME}'!P${u.row}`,values:[[u.value]]}))})});
 }
 
 function matchSrc(oid,srcCol){
-  for(const[k,s] of Object.entries(SRC_DEFS)){
+  for(const[k,s]of Object.entries(SRC_DEFS)){
     if(!enabled.has(k))continue;
     if(s.pat?.test(oid))return k;
     if(s.srcName&&srcCol?.toLowerCase().includes(s.srcName))return k;
@@ -431,11 +305,10 @@ function matchSrc(oid,srcCol){
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
-// ─── RUN ──────────────────────────────────────────────────────────────────────
+// ── RUN ──
 async function startRun(){
   if(!token1){addLog('Sign in with Account 1 first','e');return;}
   stopReq=false;running=true;
-  stats={scanned:0,written:0,skipped:0};
   document.getElementById('st-scanned').textContent='0';
   document.getElementById('st-written').textContent='0';
   document.getElementById('st-skipped').textContent='0';
@@ -476,8 +349,7 @@ async function startRun(){
         const existing=(pV[i]?.[0]||'').trim();
         const r=row+i;
         if(!oid||existing||SKIP.has(email))continue;
-        const sk=matchSrc(oid,srcCol);
-        if(!sk)continue;
+        const sk=matchSrc(oid,srcCol);if(!sk)continue;
         if(!groups.has(oid))groups.set(oid,{rows:[],sk});
         groups.get(oid).rows.push(r);
       }
@@ -486,23 +358,18 @@ async function startRun(){
       addLog(`${groups.size} order(s) found in batch`);
 
       const writes=[];
-      for(const[oid,g] of groups){
+      for(const[oid,g]of groups){
         if(stopReq)break;
         let trk;
-        if(seen.has(oid)){
-          trk=seen.get(oid);
-        } else {
+        if(seen.has(oid)){trk=seen.get(oid);}
+        else{
           addLog(`Searching: ${oid} (${SRC_DEFS[g.sk].label})…`);
-          try{
-            trk=await PARSERS[g.sk](oid);
-            seen.set(oid,trk);
-          } catch(e){
+          try{trk=await PARSERS[g.sk](oid);seen.set(oid,trk);}
+          catch(e){
             if(e.message==='AUTH1'){addLog('Account 1 token expired — please re-sign in','e');stopReq=true;break;}
-            if(e.message==='AUTH2'){addLog('Account 2 token expired — please re-sign in','w');token2=null;setAcctState(2,false);}
-            else {addLog(`✗ ${oid} — ${e.message}`,'e');}
+            addLog(`✗ ${oid} — ${e.message}`,'e');
             skipped++;document.getElementById('st-skipped').textContent=skipped;
-            addResult(oid,SRC_DEFS[g.sk].label,g.rows,'ERROR','failed');
-            continue;
+            addResult(oid,SRC_DEFS[g.sk].label,g.rows,'ERROR','failed');continue;
           }
         }
         if(trk){
@@ -511,9 +378,8 @@ async function startRun(){
           document.getElementById('st-written').textContent=written.toLocaleString();
           addLog(`✓ ${oid} → ${trk}`,'s');
           addResult(oid,SRC_DEFS[g.sk].label,g.rows,trk,'written');
-        } else {
-          skipped++;
-          document.getElementById('st-skipped').textContent=skipped;
+        }else{
+          skipped++;document.getElementById('st-skipped').textContent=skipped;
           addLog(`✗ ${oid} — no tracking found`,'w');
           addResult(oid,SRC_DEFS[g.sk].label,g.rows,'—','skipped');
         }
@@ -526,7 +392,7 @@ async function startRun(){
       }
       await sleep(150);
     }
-  } catch(e){addLog('Fatal: '+e.message,'e');}
+  }catch(e){addLog('Fatal: '+e.message,'e');}
 
   document.getElementById('prog').style.width='100%';
   document.getElementById('run-btn').style.display='block';
@@ -538,15 +404,13 @@ async function startRun(){
 
 function doStop(){stopReq=true;addLog('Stop requested…','w');}
 
-// ─── UI ───────────────────────────────────────────────────────────────────────
+// ── UI ──
 function nt(){return new Date().toTimeString().slice(0,8);}
 function addLog(msg,type=''){
   const el=document.getElementById('log');
-  const d=document.createElement('div');
-  d.className='ll';
+  const d=document.createElement('div');d.className='ll';
   d.innerHTML=`<span class="lt">${nt()}</span><span class="lm ${type}">${msg}</span>`;
-  el.appendChild(d);
-  el.scrollTop=el.scrollHeight;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 
 function addResult(oid,src,rows,tracking,status){
@@ -563,22 +427,19 @@ function addResult(oid,src,rows,tracking,status){
 
 function buildSources(){
   const c=document.getElementById('sources-ui');
-  for(const[k,s] of Object.entries(SRC_DEFS)){
-    const d=document.createElement('label');
-    d.className='src on';
-    d.dataset.key=k;
+  for(const[k,s]of Object.entries(SRC_DEFS)){
+    const d=document.createElement('label');d.className='src on';
     d.innerHTML=`<input type="checkbox" checked style="accent-color:var(--accent)"> ${s.label}`;
-    d.querySelector('input').addEventListener('change',e=>{
-      if(e.target.checked)enabled.add(k);else enabled.delete(k);
-      d.classList.toggle('on',e.target.checked);
-    });
+    d.querySelector('input').addEventListener('change',e=>{if(e.target.checked)enabled.add(k);else enabled.delete(k);d.classList.toggle('on',e.target.checked);});
     c.appendChild(d);
   }
 }
 
+// ── INIT ──
 buildSources();
-checkAuthCallback();
-addLog('Ready. Sign in with both Google accounts to start.');
+const savedCid=localStorage.getItem('oa_cid');a
+if(savedCid)document.getElementById('cid-inp').value=savedCid;
+addLog('Ready. Save Client ID and sign in with both accounts.');
 </script>
 </body>
 </html>
